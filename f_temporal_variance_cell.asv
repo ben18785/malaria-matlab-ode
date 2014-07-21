@@ -1,0 +1,39 @@
+function cell_results = f_temporal_variance_cell(c_e,c_T,c_thetaA,c_thetaB)
+% 
+
+c_stochastic = 1;
+
+n_pow = 8;
+v_chi = zeros(n_pow,1);
+v_eta = zeros(n_pow,1);
+
+for i = 1:n_pow
+    v_chi(i) = 0.01*10^(0.25*i-0.25);
+    v_eta(i) = 0.01*10^(0.25*i-0.25);
+end
+
+cell_results = cell(n_pow*n_pow,1);
+
+v_survive = zeros(n_pow,n_pow);
+k = 1;
+for i = 1:n_pow
+    for j = 1:n_pow   
+        [t,total,v_t,v_rainfall] = f_rainfall_heg_nospatial_vv(c_thetaA,c_thetaB,c_e,c_T,c_stochastic,v_chi(i),v_eta(j));
+        
+        if total(end) > 100
+            v_survive(i,j) = 1;
+        end
+        
+        v_results = zeros(3,1);
+        v_results(k) = mean(v_rainfall);
+        v_results(k) = std(v_rainfall)^2;
+        v_results(k) = v_survive(i,j);
+        
+        cell_results{k} = v_results;
+        
+        k
+        k = k + 1;
+    end
+end
+
+
