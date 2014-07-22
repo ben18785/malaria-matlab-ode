@@ -1,7 +1,7 @@
 clear; close all; clc;
 c_T = 1000;
 c_chi = 0.01;
-c_eta = 0.17;
+c_eta = 0.56;
 c_nu_mean = 0.12;
 
 dt = (c_T+10)/5000;
